@@ -1,5 +1,3 @@
-#/usr/bin/python3
-
 import csv
 import sys
 
@@ -109,7 +107,6 @@ def shortest_path(source: str, target: str) -> List[Tuple[str, str]]:
     net = create_nodes(None, destination, explored_movies)
 
     for node in net:
-        # print(movies[node.movie]["title"])
         if matches(node, origin.movies):
             proper_path = create_path(node)
             # print(proper_path)       
@@ -150,7 +147,6 @@ def create_path(node: Node, path: List[Tuple[str, str]]=[]) -> List[Tuple[str, s
 
 def get_neighbours(parent: Node, explored_movies: Set[str]) -> List[Node]:
     # the node in the paramater becomes the parent of the neighbours/children
-    # global test # debugging
     neighbours = []
     movie_id = parent.movie
     m_data = movies[movie_id]
@@ -161,18 +157,7 @@ def get_neighbours(parent: Node, explored_movies: Set[str]) -> List[Node]:
             # make a node for each of this actor's movies
             # so there will be many nodes for this actor, each of a different movie
             neighbours += create_nodes(parent, actor, explored_movies)
-            #for movie in actor.movies:
-                # if movie is already in explored movies, then it is already in the list to be explored because i have all the actors already
-                # You don't want the same movie twice, even with a different actor. Because when I get a movie, I get all the actors from it
-                # and then check their movies against the target.
-                # neighbours = create_nodes(parent, actor, explored_movies)
-                # if movie not in explored_movies:
-                #     explored_movies.add(movie)
-                #     new_node = Node(parent, actor, movie)
-                #     neighbours.append(new_node)
-        # else:
-        #     print(test)
-        #     test += 1
+
     return neighbours
 
 

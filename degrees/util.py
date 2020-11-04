@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Set, Dict, Any, Optional
 
+
 class Node():
     def __init__(self, parent: Optional[Node], actor: Actor, movie: str):
         # self.state = state
