@@ -206,77 +206,67 @@ def utility(board) -> int:
 
     # return utility
     
-def minimax(board) -> Optional[Action]:
+def minimax(board) -> Action:
 
-    def func(board):
+    def optimal_action(board, first_function_call: bool = True):
+        """
+        Highest point of the recursive function returns the optimal action
+        The deeper points of function return the scores of the individual actions
+        """
         remaining_actions = actions(board)
         scores = []
 
         for action in remaining_actions:
             resulting_board = result(board, action)
-            # return the winning move
-            # if no winning move, must be only one action left
+            # if game has finished
             if terminal(resulting_board):
                 score = utility(resulting_board)
-                # if last action is a tie end of game movie
-                if len(remaining_actions) == 1 and score == 0:
-                    return score
-                # else don't care who the player is because a player cant ,ake a losing move
-                elif score != 0:
-                    return score
+                return action if first_function_call else score
             else:     
-                score = func(resulting_board)
-                scores.append(score)
+                score = optimal_action(resulting_board, False)
+                scores.append( (score, action) )
 
         desc = True if player(board) == X else False
         # sort list of tuples
+        sorted_scores = sorted(scores, key=lambda x: x[0], reverse=desc)
+        #sorted_scores = sorted(scores, reverse=desc)
         
-        sorted_scores = sorted(scores, reverse=desc)
-        return sorted_scores[0]
+        head = sorted_scores[0][1] if first_function_call else sorted_scores[0][0]
+
+        return head
+        # if start:
+        #     return sorted_scores[0][1]
+        # else:
+        #     return sorted_scores[0][0]
 
     ####################################
+    return optimal_action(board)
+    # remaining_actions = actions(board)
+    # scores = []
+    # current_player = player(board)
 
-    remaining_actions = actions(board)
-    scores = []
-    current_player = player(board)
-
-    for action in remaining_actions:
-            resulting_board = result(board, action)
-            # return the winning move
-            # if no winning move, must be only one action left
-            if terminal(resulting_board):
-                score = utility(resulting_board)
-                # if last action is a tie end of game movie
-                if (len(remaining_actions) == 1 and score == 0) or score != 0:
-                    # return action
-                    scores.append( (score, action) )
-                # else don't care who the player is because a player cant ,ake a losing move
-                # elif score != 0:
-                #     # return action
-                #     scores.append( (score, action) )
-            else:     
-                score = (func(resulting_board), action)
-                scores.append(score)
+    # for action in remaining_actions:
+    #         resulting_board = result(board, action)
+    #         # return the winning move
+    #         # if no winning move, must be only one action left
+    #         if terminal(resulting_board):
+    #             score = utility(resulting_board)
+    #             # if last action is an end of game move or a tie
+    #             if (len(remaining_actions) == 1 and score == 0) or score != 0:
+    #                 return action
+    #                 # scores.append( (score, action) )
+    #         else:     
+    #             score = (func(resulting_board), action)
+    #             scores.append(score)
     
-    desc = True if current_player == X else False
-    # sort list of tuples
+    # desc = True if current_player == X else False
+    # # sort list of tuples
         
-    sorted_scores = sorted(scores, key=lambda x: x[0], reverse=desc)
-    print(sorted_scores)
-    return sorted_scores[0][1]
+    # sorted_scores = sorted(scores, key=lambda x: x[0], reverse=desc)
+
+    # return sorted_scores[0][1]
         
     
-
-
-
-
-
-
-
-
-
-
-
 
 
         
